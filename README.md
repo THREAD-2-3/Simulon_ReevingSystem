@@ -1,6 +1,6 @@
 # Simulon_ReevingSystem
 
-Simulon_ReevingSystem is an an open-source MATLAB code for the analysis of reeving systems as a set of rigid bodies connected with wire ropes and sheaves using the Arbitrary Lagrangian-Eulerian Modal Method (ALEM). The developed code can be adapted for the simulation of many industrial applications such as cranes, printers, elevators, and deployable structures for common operating conditions. 
+Simulon_ReevingSystem is an open-source MATLAB code for the analysis of reeving systems as a set of rigid bodies connected with wire ropes and sheaves using the Arbitrary Lagrangian-Eulerian Modal Method (ALEM). The developed code can be adapted for the simulation of many industrial applications such as cranes, printers, elevators, and deployable structures for common operating conditions. 
 
 In the docs folder, the general description of the code and the example of a two-branch 3D reeving system are given. The source Matlab files can also be found in the src folder.
 
