@@ -1,0 +1,1 @@
+function [Q_p,reevSys] = getMotorTorque(t,qind,vind,Q_p,reevSys)
