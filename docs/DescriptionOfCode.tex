@@ -21,14 +21,14 @@ The phases of the simulation are described following the main file \textbf{simul
 
 In the lines 1 - 5, the folders containing the m-files used in the simulation are added to the Matlab path, as follows:
 
-\begin{tcolorbox}{{\begin{lstlisting}[style=Matlab-editor]
+\begin{tcolorbox}{\begin{lstlisting}[style=Matlab-editor]
 restoredefaultpath;
 addpath("../../GeneralReevingSystems");
 addpath("../../WireRopeForces");
 addpath("../../mexInterface");
 addpath("RB_kinematics");
 \end{lstlisting}}
-\end{tcolorbox} \\
+\end{tcolorbox} 
 
 \textbf{PHASE 2. Getting system parameters} \\
 
@@ -38,7 +38,7 @@ In line 8, the system parameters are stored in a data structure called \texttt{r
 % Getting system parameters %
 reevSys = CraneParams;
 \end{lstlisting}}
-\end{tcolorbox}\\
+\end{tcolorbox}
 
 \setlength{\parindent}{0cm}
 \textbf{Function:} \texttt{CraneParams.m} \\
@@ -49,7 +49,7 @@ reevSys = CraneParams;
 
 The calculation of the static equilibrium position requires the solution of the non-linear algebraic equations in which the equations of motion turn when the generalized velocities and accelerations are set to zero. The unknowns of these equations are the value of the generalized coordinates and the Lagrange multipliers in static equilibrium. Lines 14 - 24 sets the initial guess of these variables. For the generalized coordinates, the initial guess is the reference value of the coordinates at the initial instant \texttt{qref}, corrected with an estimation of the rope deformation. For the Lagrange multipliers, a zero initial guess is used.
 
-\begin{tcolorbox}{{\begin{lstlisting}[style=Matlab-editor]
+\begin{tcolorbox}{\begin{lstlisting}[style=Matlab-editor]
 % Reference value of coordinates (undeformed configuration) %
 qref = [reevSys.d+reevSys.R 0.0 -(reevSys.l0 + reevSys.b) 1.0 0.0 0.0 0.0 reevSys.d 0.0 0.0 0.0 0.0 0.0]';
 n = reevSys.n;
@@ -62,11 +62,11 @@ qref(3) = qref(3) - delta;
 % constraint and Euler parameters %
 lam = [0 0]';
 \end{lstlisting}}
-\end{tcolorbox}}
+\end{tcolorbox}
 
 In lines 26 - 31, the static equilibrium position is calculated using the function \texttt{StaticEqReevingSystem.m}. Depending on the value of the parameter \texttt{reevSys.NLeq-method} different solvers can be used.
 
-\begin{tcolorbox}{{\begin{lstlisting}[style=Matlab-editor]
+\begin{tcolorbox}{\begin{lstlisting}[style=Matlab-editor]
 % Calculation of static equilibrium position %
 if strcmp(reevSys.NLeq_method,'NewtonRaphson')
     q0lam = NewtonRaphson(@StaticEqReevingSystem,[qref' lam']',reevSys);
@@ -74,7 +74,7 @@ elseif strcmp(reevSys.NLeq_method,'fsolve')
     q0lam = fsolve(@(qlam) StaticEqReevingSystem(qlam,reevSys),[qref' lam']',optimset('TolFun',1e-3));
 end
 \end{lstlisting}}
-\end{tcolorbox}}
+\end{tcolorbox}
 
 \setlength{\parindent}{0cm}
 \textbf{Function:} \texttt{StaticEqReevingSystem.m} \\
@@ -83,7 +83,7 @@ end
 
 In lines 33 -41, the initial value of the independent generalized coordinates \texttt{qind0} and the initial guess of the dependent generalized coordinates \texttt{reevSys.qdep0} are extracted from the calculated static equilibrim position. Besides, the value of all coordinates at the static equilibrium position is obtained with function \texttt{CalculateAllCoordinates.m}.
 
-\begin{tcolorbox}{{\begin{lstlisting}[style=Matlab-editor]
+\begin{tcolorbox}{\begin{lstlisting}[style=Matlab-editor]
 % Generalized coordinates in static equilibrium %
 qst = q0lam(1:n,1);
 % Initial value of independent coordinates %
@@ -94,7 +94,7 @@ reevSys.qdep0 = q0lam(reevSys.Dep);
 % Calculation of all coordinates in static equilibrium %
 pst = CalculateAllCoordinates(0.0,qst,reevSys);
 \end{lstlisting}}
-\end{tcolorbox}}
+\end{tcolorbox}
 
 \setlength{\parindent}{0cm}
 \textbf{Function:} \texttt{CalculateAllCoordinates.m} \\
@@ -121,7 +121,7 @@ title('Axial load on wire ropes. Initial static position')
 xlabel('Arc-length along rope (m)');
 ylabel('Axial load (KN)');
 legend('Horizontal element a','Vertical element b');
-\end{lstlisting}}}
+\end{lstlisting}}
 \end{tcolorbox}
 
 \setlength{\parindent}{0cm}
@@ -148,7 +148,7 @@ elseif strcmp(reevSys.ODE_method,'ode45')
 elseif strcmp(reevSys.ODE_method,'RungeKutta4')
     [t y] = RungeKutta4(@EqMotReevingSystem,[0 5.0], [qind0' vind0']', 0.001, reevSys);
 end
-\end{lstlisting}}}
+\end{lstlisting}}
 \end{tcolorbox}
 
 \setlength{\parindent}{0cm}
@@ -183,7 +183,7 @@ title('Axial load on wire ropes')
 xlabel('Time (s)');
 ylabel('Axial load (KN)');
 legend('End 1 of element a','End 2 of element b');
-\end{lstlisting}}}
+\end{lstlisting}}
 \end{tcolorbox}
 
 \setlength{\parindent}{0cm}
@@ -209,7 +209,7 @@ end
 for i = 1:length(t2)
     Fot(i) = AnimateCrane(t2(i),p2(:,i),reevSys);
 end
-\end{lstlisting}}}
+\end{lstlisting}}
 \end{tcolorbox}
 
 \setlength{\parindent}{0cm}
