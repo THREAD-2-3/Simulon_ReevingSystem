@@ -1,8 +1,8 @@
-\section{Description of code}
+\subsection{Description of code}
 
 The code implements a systematic formulation of the dynamics of wire-rope reeving systems modeled as flexible multibody systems using the arbitrary Lagrangian-Eulerian modal approach (ALEM) described in~\cite{Escalona2022}. This method can efficiently be used for the simulation of many industrial applications such as cranes, printers, elevators, and deployable structures for common operating conditions.
 
-\subsection{Organization of the code}
+\subsubsection{Organization of the code}
 
 The program is a set of Matlab files that has been grouped into 5 main sub-folders as:
 \begin{itemize}
@@ -13,7 +13,7 @@ The program is a set of Matlab files that has been grouped into 5 main sub-folde
 \item{\textbf{simpleCrane}: This folder contains the m-files related to the presented example. These m-files describe the model parameters, coordinates, and the prescribed motion of the model. }
 \end{itemize}
 
-\subsection{Phases of simulation}
+\subsubsection{Phases of simulation}
 
 The phases of the simulation are described following the main file \textbf{simulateSimpleCrane.m} that can be found in the folder \textit{src/simpleCrane/}. The inputs and outputs of the used functions are described next. \\
 
@@ -21,24 +21,24 @@ The phases of the simulation are described following the main file \textbf{simul
 
 In the lines 1 - 5, the folders containing the m-files used in the simulation are added to the Matlab path, as follows:
 
-\begin{tcolorbox}{\begin{lstlisting}[style=Matlab-editor]
+{\begin{tcolorbox}\begin{lstlisting}[style=Matlab-editor]
 restoredefaultpath;
 addpath("../../GeneralReevingSystems");
 addpath("../../WireRopeForces");
 addpath("../../mexInterface");
 addpath("RB_kinematics");
-\end{lstlisting}}
-\end{tcolorbox} 
+\end{lstlisting}\end{tcolorbox}}
+ 
 
 \textbf{PHASE 2. Getting system parameters} \\
 
 In line 8, the system parameters are stored in a data structure called \texttt{reevSys} that is the output of the function \textbf{CraneParams.m}. The different coordinate sets, the geometric, inertial and visco-elastic parameters of the system, the prescribed motion and the simulation parameters are defined and included as fields of the data structure \texttt{reevSys}. 
 
-\begin{tcolorbox}{\begin{lstlisting}[style=Matlab-editor]
+{\begin{tcolorbox}\begin{lstlisting}[style=Matlab-editor]
 % Getting system parameters %
 reevSys = CraneParams;
-\end{lstlisting}}
-\end{tcolorbox}
+\end{lstlisting}\end{tcolorbox}}
+
 
 \setlength{\parindent}{0cm}
 \textbf{Function:} \texttt{CraneParams.m} \\
@@ -49,7 +49,7 @@ reevSys = CraneParams;
 
 The calculation of the static equilibrium position requires the solution of the non-linear algebraic equations in which the equations of motion turn when the generalized velocities and accelerations are set to zero. The unknowns of these equations are the value of the generalized coordinates and the Lagrange multipliers in static equilibrium. Lines 14 - 24 sets the initial guess of these variables. For the generalized coordinates, the initial guess is the reference value of the coordinates at the initial instant \texttt{qref}, corrected with an estimation of the rope deformation. For the Lagrange multipliers, a zero initial guess is used.
 
-\begin{tcolorbox}{\begin{lstlisting}[style=Matlab-editor]
+{\begin{tcolorbox}\begin{lstlisting}[style=Matlab-editor]
 % Reference value of coordinates (undeformed configuration) %
 qref = [reevSys.d+reevSys.R 0.0 -(reevSys.l0 + reevSys.b) 1.0 0.0 0.0 0.0 reevSys.d 0.0 0.0 0.0 0.0 0.0]';
 n = reevSys.n;
@@ -61,20 +61,20 @@ qref(3) = qref(3) - delta;
 % Initial guess of Lagrange multipliers associated with axial load
 % constraint and Euler parameters %
 lam = [0 0]';
-\end{lstlisting}}
-\end{tcolorbox}
+\end{lstlisting}\end{tcolorbox}}
+
 
 In lines 26 - 31, the static equilibrium position is calculated using the function \texttt{StaticEqReevingSystem.m}. Depending on the value of the parameter \texttt{reevSys.NLeq-method} different solvers can be used.
 
-\begin{tcolorbox}{\begin{lstlisting}[style=Matlab-editor]
+{\begin{tcolorbox}\begin{lstlisting}[style=Matlab-editor]
 % Calculation of static equilibrium position %
 if strcmp(reevSys.NLeq_method,'NewtonRaphson')
     q0lam = NewtonRaphson(@StaticEqReevingSystem,[qref' lam']',reevSys);
 elseif strcmp(reevSys.NLeq_method,'fsolve')
     q0lam = fsolve(@(qlam) StaticEqReevingSystem(qlam,reevSys),[qref' lam']',optimset('TolFun',1e-3));
 end
-\end{lstlisting}}
-\end{tcolorbox}
+\end{lstlisting}\end{tcolorbox}}
+
 
 \setlength{\parindent}{0cm}
 \textbf{Function:} \texttt{StaticEqReevingSystem.m} \\
@@ -83,7 +83,7 @@ end
 
 In lines 33 -41, the initial value of the independent generalized coordinates \texttt{qind0} and the initial guess of the dependent generalized coordinates \texttt{reevSys.qdep0} are extracted from the calculated static equilibrim position. Besides, the value of all coordinates at the static equilibrium position is obtained with function \texttt{CalculateAllCoordinates.m}.
 
-\begin{tcolorbox}{\begin{lstlisting}[style=Matlab-editor]
+{\begin{tcolorbox}\begin{lstlisting}[style=Matlab-editor]
 % Generalized coordinates in static equilibrium %
 qst = q0lam(1:n,1);
 % Initial value of independent coordinates %
@@ -93,8 +93,8 @@ reevSys.qdep0 = q0lam(reevSys.Dep);
 
 % Calculation of all coordinates in static equilibrium %
 pst = CalculateAllCoordinates(0.0,qst,reevSys);
-\end{lstlisting}}
-\end{tcolorbox}
+\end{lstlisting}\end{tcolorbox}}
+
 
 \setlength{\parindent}{0cm}
 \textbf{Function:} \texttt{CalculateAllCoordinates.m} \\
@@ -103,7 +103,7 @@ pst = CalculateAllCoordinates(0.0,qst,reevSys);
 
 Line 43 - 53 is a post-process of the static equilibrium position. The axial force field along the two rope elements is computed and plotted.
 
-\begin{tcolorbox}{\begin{lstlisting}[style=Matlab-editor]
+{\begin{tcolorbox}\begin{lstlisting}[style=Matlab-editor]
 % Calculation of axial force field along rope %
 sa = 0:0.01:qst(8);
 for i = 1:length(sa)
@@ -121,8 +121,8 @@ title('Axial load on wire ropes. Initial static position')
 xlabel('Arc-length along rope (m)');
 ylabel('Axial load (KN)');
 legend('Horizontal element a','Vertical element b');
-\end{lstlisting}}
-\end{tcolorbox}
+\end{lstlisting}\end{tcolorbox}}
+
 
 \setlength{\parindent}{0cm}
 \textbf{Function:} \texttt{AxialLoad.m} \\
@@ -133,7 +133,7 @@ legend('Horizontal element a','Vertical element b');
 
 Lines 65 - 78 perform the dynamic simulation. In line 66, the value of the independent velocities \texttt{vind} is set to zero. Depending on the value of the parameter \texttt{reevSys.ODE-method} different solvers for the equations of motion can be used.
 
-\begin{tcolorbox}{\begin{lstlisting}[style=Matlab-editor]
+{\begin{tcolorbox}\begin{lstlisting}[style=Matlab-editor]
 % Initial value of independent velocities %
 vind0 = zeros(size(reevSys.Ind));
 
@@ -148,8 +148,8 @@ elseif strcmp(reevSys.ODE_method,'ode45')
 elseif strcmp(reevSys.ODE_method,'RungeKutta4')
     [t y] = RungeKutta4(@EqMotReevingSystem,[0 5.0], [qind0' vind0']', 0.001, reevSys);
 end
-\end{lstlisting}}
-\end{tcolorbox}
+\end{lstlisting}\end{tcolorbox}}
+
 
 \setlength{\parindent}{0cm}
 \textbf{Function:} \texttt{EqMotReevingSystem.m} \\
@@ -160,7 +160,7 @@ end
 
 In lines 84 - 105, the total set of coordinates \texttt{p} at all instants and the axial loads at end $1$ of element $a$ and at end $2$ of element $b$ are computed and plotted. 
 
-\begin{tcolorbox}{\begin{lstlisting}[style=Matlab-editor]
+{\begin{tcolorbox}\begin{lstlisting}[style=Matlab-editor]
 % Calculation of all coordinates all instants %
 qdep = reevSys.qdep0;
 
@@ -183,8 +183,8 @@ title('Axial load on wire ropes')
 xlabel('Time (s)');
 ylabel('Axial load (KN)');
 legend('End 1 of element a','End 2 of element b');
-\end{lstlisting}}
-\end{tcolorbox}
+\end{lstlisting}\end{tcolorbox}}
+
 
 \setlength{\parindent}{0cm}
 \textbf{Function:} \texttt{Calculate-p-from-qind.m} \\
@@ -193,7 +193,7 @@ legend('End 1 of element a','End 2 of element b');
 
 In lines 107 - 121, the total set of coordinates are re-sampled (to avoid too long animation) and the animation of the motion of the crane is performed.
 
-\begin{tcolorbox}{\begin{lstlisting}[style=Matlab-editor]
+{\begin{tcolorbox}\begin{lstlisting}[style=Matlab-editor]
 % Animation of crane motion %
 % Number of frames of the animation %
 N = 100;
@@ -209,8 +209,8 @@ end
 for i = 1:length(t2)
     Fot(i) = AnimateCrane(t2(i),p2(:,i),reevSys);
 end
-\end{lstlisting}}
-\end{tcolorbox}
+\end{lstlisting}\end{tcolorbox}}
+
 
 \setlength{\parindent}{0cm}
 \textbf{Function:} \texttt{AnimateCrane.m} \\
@@ -218,12 +218,12 @@ end
 \textbf{Outputs:} Video frame \texttt{Fot} \\
 
 
-\section{Installation and running}
+\subsection{Installation and running}
  This code does not require any installation. To execute it in a Matlab environment, simply run \textbf{simulateSimpleCrane.m} in \textit{src/simpleCrane/}. By running the code, the system solves the problem for the given parameters, plots simulation results and animates the motion of the crane. 
 
 
 \begin{comment}
-\subsection{m-files description}
+\subsubsection{m-files description}
 \texttt{CalculateAllCoordinates}: The main structure of the code can be found in 
 
 \textbf{Parameters} The set of the coordinates of the reeving system \texttt{p}, time vector \texttt{t}, and the parameters of the system as \texttt{reevSys}.
