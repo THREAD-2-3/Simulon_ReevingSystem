@@ -1,6 +1,6 @@
 \subsection{Description of code}
 
-The code implements a systematic formulation of the dynamics of wire-rope reeving systems modeled as flexible multibody systems using the arbitrary Lagrangian-Eulerian modal approach (ALEM) described in~\cite{Escalona2022}. This method can efficiently be used for the simulation of many industrial applications such as cranes, printers, elevators, and deployable structures for common operating conditions.
+The code implements a systematic formulation of the dynamics of wire-rope reeving systems modeled as flexible multibody systems using the arbitrary Lagrangian-Eulerian modal approach (ALEM) described in~\cite{Escalona2022}. This method can efficiently be used for the simulation of many industrial applications such as cranes, belt drives, elevators, hoisting machines in mining industry, tensegrity structures and deployable structures for common operating conditions.
 
 \subsubsection{Organization of the code}
 
@@ -221,15 +221,9 @@ end
 \subsection{Installation and running}
  This code does not require any installation. To execute it in a Matlab environment, simply run \textbf{simulateSimpleCrane.m} in \textit{src/simpleCrane/}. By running the code, the system solves the problem for the given parameters, plots simulation results and animates the motion of the crane. 
 
-
-\begin{comment}
-\subsubsection{m-files description}
-\texttt{CalculateAllCoordinates}: The main structure of the code can be found in 
-
-\textbf{Parameters} The set of the coordinates of the reeving system \texttt{p}, time vector \texttt{t}, and the parameters of the system as \texttt{reevSys}.
-
-\textbf{Returns} The animation of the simulation
-\end{comment}
+\subsection{Conclusions}
+The example and code that can be found at THREAD repository \url{https://github.com/THREAD-2-3/Simulon_ReevingSystem} demonstrate the use of the ALEM method  to analyse the dynamics of reeving systems as described in~\cite{EscalonaOrzechowskiMikkola2018}. In its current form, the code can be used to systematically model and simulate reeving systems including rigid bodies and ropes connected with sheaves and reels. The finite element mesh used to describe the rope dynamics just require one element per rope free span. The rope finite element model can be used to analyse axial and bending deformation, with variable axial force along the rope length, and transverse vibrations. 
+The program is being extended for the simulation of axial-torsion coupled deformation of ropes and the detailed analysis of the rope-sheave contact interaction.
 
 
 
