@@ -1,8 +1,11 @@
 \section{Simple crane model}\label{sec:craneSimulon}
-In this section, we explore the simulation of a simple crane system, examining its motion and various aspects of its configuration, as illustrated in Figure~\ref{fig:ex_reeving_system}. Utilizing the Arbitrary Lagrangian-Eulerian Modal approach, we analyze the crane's slewing and winding motions and their respective velocity profiles, while also discussing the kinematic description of the wire-rope elements.
+The example described in this section is the simple crane shown in Figure~\ref{fig:ex_reeving_system}. The dynamics of this system is analyzed with the Arbitrary Lagrangian-Eulerian Modal (ALEM) approach. During the simulated operation, the crane lifts a heavy load while rotating about the vertical axis. This example demonstrates the capability of the ALEM method to describe the dynamics of reeving systems with large 3D translations and rotations, variable-length rope spans, non-uniform axial load along the ropes and transverse vibrations of the ropes. The model is computationally very efficient, requiring just 2 finite elements to model the system. The repository for the code related to this section is located at:
+\bi
+  \item[] \url{https://github.com/THREAD-2-3/Simulon_ReevingSystem}
+\ei
 
 \subsection{Description of the simple crane model}
-The example simulates the motion of a simple crane. The configuration of the system is shown in Figure~\ref{fig:ex_reeving_system}. The parameters of the system are given in Table~\ref{tab:reeving_system_parameters}. As sketched in Figure~\ref{fig:ex_reeving_system}, the system subjected to two imposed motions: rotation of the crane around the vertical $Z$ axis, or \textit{slewing motion}, and rotation of the drive reel to lift the payload, or \textit{winding motion}. The velocity profiles of the winding motion and slewing motion start at zero and smoothly reach a constant value following the laws: 
+The configuration of the system is shown in Figure~\ref{fig:ex_reeving_system}. The parameters of the system are given in Table~\ref{tab:reeving_system_parameters}. As sketched in Figure~\ref{fig:ex_reeving_system}, the system subjected to two imposed motions: rotation of the crane around the vertical $Z$ axis, or \textit{slewing motion}, and rotation of the drive reel to lift the payload, or \textit{winding motion}. The velocity profiles of the winding motion and slewing motion start at zero and smoothly reach a constant value following the laws: 
 
 \begin{equation}
 V = \left\{ {\begin{array}{*{20}{c}}
@@ -58,7 +61,7 @@ where the assumed constant velocity values are $V_c = 1\, {\rm{m}}/{{\rm{s}}}$, 
     \end{tabular}
 \end{table}
 
-The simulation procedure is the Arbitrary Lagrangian-Eulerian Modal approach described in ~\cite{Escalona2022, Escalona2017}. All details about the formulation can be found in the reference papers. The model includes 1 rigid body which is the payload, and 2 wire-rope elements. The total set of coordinates is given by:
+The simulation procedure is the Arbitrary Lagrangian-Eulerian Modal approach described in ~\cite{Escalona2017, EscalonaOrzechowskiMikkola2018, Escalona2022}. All details about the formulation can be found in the reference papers. The model includes 1 rigid body which is the payload, and 2 wire-rope elements. The total set of coordinates is given by:
 
 \begin{equation}
     {{\bf{p}}} = {\left[ {\begin{array}{*{20}{c}}{{\bf{q}}^{2}}^T & {{\bf{q}}^{a}}^T & {{\bf{q}}^{b}}^T \end{array}} \right]^T}
@@ -73,8 +76,8 @@ where ${{\bf{q}}^{2}}$ is the set of coordinates of rigid body 2. These are 3 tr
 \end{equation}
 
 \begin{equation}
-  {\textbf{r}}^{2} = {\left[ {\begin{array}{*{20}{c}}{{{{r}}_x^{2}}^T}&{{{{r}}_y^{2}}^T}&
-  {{{{r}}_z^{2}}^T} \end{array}} \right]^T},     \boldsymbol{\theta}^{2} = {\left[ {\begin{array}{*{20}{c}}{{\theta_{0}^{2}}}&{{\theta_{1}^{2}}}&{{\theta_{2}^{2}}}&{{\theta_{3}^{2}}}\end{array}} \right]^T}  
+  {\textbf{r}}^{2} = {\left[ {\begin{array}{*{20}{c}}{{{r}}_x^{2}}&{{{r}}_y^{2}}&
+  {{{r}}_z^{2}} \end{array}} \right]^T},     \boldsymbol{\theta}^{2} = {\left[ {\begin{array}{*{20}{c}}{{\theta_{0}^{2}}}&{{\theta_{1}^{2}}}&{{\theta_{2}^{2}}}&{{\theta_{3}^{2}}}\end{array}} \right]^T}  
 \end{equation}
 
 \begin{figure}
@@ -84,7 +87,7 @@ where ${{\bf{q}}^{2}}$ is the set of coordinates of rigid body 2. These are 3 tr
     \label{fig:ex_reeving_system}
 \end{figure}
 
-Each ALEM wire-rope element $a$ and $b$ is kinematically described with a set of 6 absolute nodal coordinates $\textbf{q}_a$, 2 arc-length material coordinates $\textbf{q}_s$, and a maximum of 3 modal coordinates in each of the 3 local directions included in $\textbf{q}_m$. For example, for the wire-rope $a$, these coordinates are given by:
+Each ALEM wire-rope element, $a$ or $b$, is kinematically described with a set of 6 absolute nodal coordinates $\textbf{q}_a$, 2 arc-length material coordinates $\textbf{q}_s$, and a maximum of 3 modal coordinates in each of the 3 local directions included in $\textbf{q}_m$. For example, for the wire-rope $a$, these coordinates are given by:
 
 \begin{equation}
   {\textbf{q}}_a^{a} = {\left[ {\begin{array}{*{20}{c}}{{{\bf{q}}_a^{a}}^T}&{{{\bf{q}}_s^{a}}^T} & {{{\bf{q}}_m^{a}}^T} \end{array}} \right]^T}
@@ -95,10 +98,10 @@ Each ALEM wire-rope element $a$ and $b$ is kinematically described with a set of
 \end{equation}
 
 \begin{equation}
-    {\textbf{q}}_m^{a} = \left[ {\begin{array}{*{20}{c}}{{q_{x,1}^a}}&{{q_{x,2}^a}} &{{q_{x,3}^a}}&{{q_{y,1}^a}}&{{q_{y,2}^a}}& {{q_{y,3}^a}}&{{q_{z,1}^a}}&{{q_{z,2}^a}}& {{q_{z,3}^a}}\end{array}} \right]^T 
+    {\textbf{q}}_m^{a} = \left[ {\begin{array}{*{20}{c}}{{q_{mX1}^a}}&{{q_{mX2}^a}} &{{q_{mX3}^a}}&{{q_{mY1}^a}}&{{q_{mY2}^a}}& {{q_{mY3}^a}}&{{q_{mZ1}^a}}&{{q_{mZ2}^a}}& {{q_{mZ3}^a}}\end{array}} \right]^T 
 \end{equation}
 
-In this example, no modal coordinates are considered for the rope element $a$. For the rope element $b$, 3 axial-modal coordinates in the longitudinal direction $X_b$, $q_{mXi}^b,\, i = 1,2,3$, 1 transverse-modal coordinate in the local direction $Y_b$, $q_{mY1}^b$, and 1 transverse-modal coordinate in the local direction $Z_b$, $q_{mZ1}^b$, are used in the model. Therefore, the set of total coordinates $\textbf{p}$ is subjected to linear and nonlinear constraints. The linear constraints are expressed as:
+In this example, no modal coordinates are considered for the rope element $a$. For the rope element $b$, 3 axial-modal coordinates in the longitudinal direction $X_b$, $q_{mXi}^b,\, i = 1,2,3$, 1 transverse-modal coordinate in the local direction $Y_b$, $q_{mY1}^b$, and 1 transverse-modal coordinate in the local direction $Z_b$, $q_{mZ1}^b$, are used in the model. The set of total coordinates $\textbf{p}$ is subjected to linear and nonlinear constraints. The linear constraints are expressed as:
 
 \begin{equation} \label{Clin_Elev}
 {{\bf{C}}_{lin}}\left( {{\bf{p}},t} \right) = \left[ {\begin{array}{*{20}{c}}
@@ -113,7 +116,7 @@ In this example, no modal coordinates are considered for the rope element $a$. F
 \end{array}} \right]{}^T}\\
 {{\bf{r}}_2^b - \left( {{{\bf{r}}^2} + {{\bf{A}}^2}\left[ {\begin{array}{*{20}{c}}
 0&0&b
-\end{array}} \right]{}^T} \right){}^T}\\
+\end{array}} \right]{}^T} \right)}\\
 {s_1^a - \int {Vdt} }\\
 {s_2^a - s_1^b}\\
 {s_2^b - \left( {d + {l_0}} \right)}\\
@@ -126,9 +129,9 @@ In this example, no modal coordinates are considered for the rope element $a$. F
 \end{equation}
 
 \setlength{\parindent}{0cm}
-This is a set of 28 equations, $m_l = 28$.\\     
+This is a set of 28 linear algebraic equations in terms of the coordinates $\textbf{q}_a$ and $\textbf{q}_b$, $m_l = 28$.\\     
 
-Nonlinear constraints are due to the force balance of the wire rope elements at the deviation sheave and to the unity of the quaternions used to describe the rotation of the payload, as follows: 
+Nonlinear constraints are due to the axial force balance at the end of the the wire rope elements tangent to the deviation sheave and to the unity-norm of the quaternions used to describe the rotation of the payload, as follows: 
 
 \begin{equation} 
 {{\bf{C}}_{nonlin}}\left( {\bf{p}} \right) = \left[ {\begin{array}{*{20}{c}}
@@ -139,9 +142,9 @@ Nonlinear constraints are due to the force balance of the wire rope elements at 
 \end{equation}
 
 \setlength{\parindent}{0cm}
-This is a set of 2 equations, $m_{nl} = 2$.\\
+This is a set of 2 non-linear algebraic equations, $m_{nl} = 2$.\\
 
-The number of generalized coordinates $\textbf{q}$ of the system , $n$, equals the number of coordinates in $\textbf{p}$, $n_p$, minus the number of linear constraints: $n = {n_p} - {m_l} = 41 - 28 = 13$.
+The number of generalized coordinates $\textbf{q}$ of the system, $n$, equals the number of coordinates in $\textbf{p}$, $n_p$, minus the number of linear constraints: $n = {n_p} - {m_l} = 41 - 28 = 13$.
 The array $\textbf{q}$ is given by:
 
 \begin{equation} \label{setq_Elev}
@@ -166,6 +169,17 @@ The generalized coordinates of the system $\textbf{q}$ is partitioned into indep
 \end{equation}
 
 where the number of independent coordinates $n_{dep}$ equals the number of nonlinear constraints, $m_{nl}$. That way, the set $\textbf{q}_{dep}$ can be obtained solving the nonlinear constraints ${\bf{C}}_{nonlin}$ once the value of set $\textbf{q}_{ind}$ is known. Once the set $\textbf{q}$ is known, the linear constraints ${\bf{C}}_{lin}$ is used to find the value of the total set of coordinates $\textbf{p}$.
+
+\subsection{Results}
+
+Figure~\ref{fig:craneLiftingSlewing} shows a sequence of positions of the simulated system in motion. The simulated time is 5 s. It takes Matlab 43 s to simulate the motion with unoptimized code.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{Figures/craneLiftingSlewing.png}
+    \caption{Motion of the crane and payload}
+    \label{fig:craneLiftingSlewing}
+\end{figure}
 
 
 
