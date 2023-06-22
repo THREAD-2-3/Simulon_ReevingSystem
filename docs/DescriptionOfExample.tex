@@ -5,7 +5,7 @@ The example described in this section is the simple crane shown in Figure~\ref{f
 \ei
 
 \subsection{Description of the simple crane model}
-The configuration of the system is shown in Figure~\ref{fig:ex_reeving_system}. The parameters of the system are given in Table~\ref{tab:reeving_system_parameters}. As sketched in Figure~\ref{fig:ex_reeving_system}, the system subjected to two imposed motions: rotation of the crane around the vertical $Z$ axis, or \textit{slewing motion}, and rotation of the drive reel to lift the payload, or \textit{winding motion}. The velocity profiles of the winding motion and slewing motion start at zero and smoothly reach a constant value following the laws: 
+The configuration of the system is shown in Figure~\ref{fig:ex_reeving_system}. The parameters of the system are given in Table~\ref{tab:reeving_system_parameters}. As sketched in Figure~\ref{fig:ex_reeving_system}, the system is subjected to two imposed motions: rotation of the crane around the vertical $Z$ axis, or \textit{slewing motion}, and rotation of the drive reel to lift the payload, or \textit{winding motion}. The velocity profiles of the winding motion and slewing motion start at zero and smoothly reach a constant value following the laws: 
 
 \begin{equation}
 V = \left\{ {\begin{array}{*{20}{c}}
@@ -61,7 +61,7 @@ where the assumed constant velocity values are $V_c = 1\, {\rm{m}}/{{\rm{s}}}$, 
     \end{tabular}
 \end{table}
 
-The simulation procedure is the Arbitrary Lagrangian-Eulerian Modal approach described in ~\cite{Escalona2017, EscalonaOrzechowskiMikkola2018, Escalona2022}. All details about the formulation can be found in the reference papers. The model includes 1 rigid body which is the payload, and 2 wire-rope elements. The total set of coordinates is given by:
+The simulation procedure is the ALEM approach described in ~\cite{Escalona2017, EscalonaOrzechowskiMikkola2018, Escalona2022}. All details about the formulation can be found in the reference papers. The model includes 1 rigid body which is the payload, and 2 wire-rope elements. The total set of coordinates is given by:
 
 \begin{equation}
     {{\bf{p}}} = {\left[ {\begin{array}{*{20}{c}}{{\bf{q}}^{2}}^T & {{\bf{q}}^{a}}^T & {{\bf{q}}^{b}}^T \end{array}} \right]^T}
@@ -69,7 +69,7 @@ The simulation procedure is the Arbitrary Lagrangian-Eulerian Modal approach des
 \end{equation}
 
 \setlength{\parindent}{0cm}
-where ${{\bf{q}}^{2}}$ is the set of coordinates of rigid body 2. These are 3 transnational coordinates and 4 Euler parameters:
+where ${{\bf{q}}^{2}}$ is the set of coordinates of rigid body 2. These are 3 translational coordinates and 4 Euler parameters:
 
 \begin{equation}
     {{\textbf{q}}}^{2} = {\left[ {\begin{array}{*{20}{c}}{\textbf{r}^{2}}^T&{\boldsymbol{\theta}^{2}}^T \end{array}} \right]^T}
@@ -131,7 +131,7 @@ In this example, no modal coordinates are considered for the rope element $a$. F
 \setlength{\parindent}{0cm}
 This is a set of 28 linear algebraic equations in terms of the coordinates $\textbf{q}_a$ and $\textbf{q}_b$, $m_l = 28$.\\     
 
-Nonlinear constraints are due to the axial force balance at the end of the the wire rope elements tangent to the deviation sheave and to the unity-norm of the quaternions used to describe the rotation of the payload, as follows: 
+Nonlinear constraints are due to the axial force balance at the end of the wire rope elements tangent to the deviation sheave and to the unity norm of the quaternions used to describe the rotation of the payload, as follows: 
 
 \begin{equation} 
 {{\bf{C}}_{nonlin}}\left( {\bf{p}} \right) = \left[ {\begin{array}{*{20}{c}}
@@ -168,7 +168,7 @@ The generalized coordinates of the system $\textbf{q}$ is partitioned into indep
 \label{Dep}
 \end{equation}
 
-where the number of independent coordinates $n_{dep}$ equals the number of nonlinear constraints, $m_{nl}$. That way, the set $\textbf{q}_{dep}$ can be obtained solving the nonlinear constraints ${\bf{C}}_{nonlin}$ once the value of set $\textbf{q}_{ind}$ is known. Once the set $\textbf{q}$ is known, the linear constraints ${\bf{C}}_{lin}$ is used to find the value of the total set of coordinates $\textbf{p}$.
+where the number of independent coordinates $n_{dep}$ equals the number of nonlinear constraints, $m_{nl}$. That way, the set $\textbf{q}_{dep}$ can be obtained by solving the nonlinear constraints ${\bf{C}}_{nonlin}$ once the value of set $\textbf{q}_{ind}$ is known. Once the set $\textbf{q}$ is known, the linear constraints ${\bf{C}}_{lin}$ is used to find the value of the total set of coordinates $\textbf{p}$.
 
 \subsection{Results}
 

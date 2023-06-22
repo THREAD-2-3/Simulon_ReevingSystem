@@ -1,6 +1,6 @@
 \subsection{Description of code}
 
-The code implements a systematic formulation of the dynamics of wire-rope reeving systems modeled as flexible multibody systems using the arbitrary Lagrangian-Eulerian modal approach (ALEM) described in~\cite{Escalona2022}. This method can efficiently be used for the simulation of many industrial applications such as cranes, belt drives, elevators, hoisting machines in mining industry, tensegrity structures and deployable structures for common operating conditions.
+The code implements a systematic formulation of the dynamics of wire-rope reeving systems modelled as flexible multibody systems using the arbitrary Lagrangian-Eulerian modal approach (ALEM) described in~\cite{Escalona2022}. This method can efficiently be used for the simulation of many industrial applications such as cranes, belt drives, elevators, hoisting machines in the mining industry, tensegrity structures and deployable structures for common operating conditions.
 
 \subsubsection{Organization of the code}
 
@@ -8,18 +8,18 @@ The program is a set of Matlab files that has been grouped into 5 main sub-folde
 \begin{itemize}
 \item{\textbf{GeneralReevingSystems}: This folder contains the general m-files to simulate the dynamics of any reeving system.}
 \item{\textbf{WireRopeForces}: This folder contains m-files that compute the forces and mass matrix of an ALEM  wire-rope element. These files have been generated using symbolic calculation in Matlab.}
-\item{\textbf{Solver}: This folder contains a few numerical methods for equations solving that can be used as an alternative to the Matlab built-in functions.}
-\item{\textbf{mexInterface}: This folder contains MEX files replace some m-files to decrease the computational time needed to solve the systems dynamics.}
+\item{\textbf{Solver}: This folder contains a few numerical methods for equation solving that can be used as an alternative to the Matlab built-in functions.}
+\item{\textbf{mexInterface}: This folder contains MEX files to replace some m-files to decrease the computational time needed to solve the system's dynamics.}
 \item{\textbf{simpleCrane}: This folder contains the m-files related to the presented example. These m-files describe the model parameters, coordinates, and the prescribed motion of the model. }
 \end{itemize}
 
 \subsubsection{Phases of simulation}
 
-The phases of the simulation are described following the main file \textbf{simulateSimpleCrane.m} that can be found in the folder \textit{src/simpleCrane/}. The inputs and outputs of the used functions are described next. \\
+The phases of the simulation are described following the main file \textbf{simulateSimpleCrane.m} that can be found in the folder \texttt{src/simpleCrane/}. The inputs and outputs of the used functions are described next. \\
 
 \textbf{PHASE 1. Adding folders to Matlab path} \\
 
-In the lines 1 - 5, the folders containing the m-files used in the simulation are added to the Matlab path, as follows:
+In lines 1 - 5, the folders containing the m-files used in the simulation are added to the Matlab path, as follows:
 
 {\begin{tcolorbox}\begin{lstlisting}[style=Matlab-editor]
 restoredefaultpath;
@@ -32,7 +32,7 @@ addpath("RB_kinematics");
 
 \textbf{PHASE 2. Getting system parameters} \\
 
-In line 8, the system parameters are stored in a data structure called \texttt{reevSys} that is the output of the function \textbf{CraneParams.m}. The different coordinate sets, the geometric, inertial and visco-elastic parameters of the system, the prescribed motion and the simulation parameters are defined and included as fields of the data structure \texttt{reevSys}. 
+In line 8, the system parameters are stored in a data structure called \texttt{reevSys} which is the output of the function \texttt{CraneParams.m}. The different coordinate sets, the geometric, inertial and visco-elastic parameters of the system, the prescribed motion and the simulation parameters are defined and included as fields of the data structure \texttt{reevSys}. 
 
 {\begin{tcolorbox}\begin{lstlisting}[style=Matlab-editor]
 % Getting system parameters %
@@ -81,7 +81,7 @@ end
 \textbf{Inputs:} Array with generalized coordinates and Lagrange multipliers \texttt{qlam}. Data structure \texttt{reevSys.qdep0} \\
 \textbf{Output:} Non-linear equilibrium equations \\
 
-In lines 33 -41, the initial value of the independent generalized coordinates \texttt{qind0} and the initial guess of the dependent generalized coordinates \texttt{reevSys.qdep0} are extracted from the calculated static equilibrim position. Besides, the value of all coordinates at the static equilibrium position is obtained with function \texttt{CalculateAllCoordinates.m}.
+In lines 33 -41, the initial value of the independent generalized coordinates \texttt{qind0} and the initial guess of the dependent generalized coordinates \texttt{reevSys.qdep0} are extracted from the calculated static equilibrium position. Besides, the value of all coordinates at the static equilibrium position is obtained with a function \texttt{CalculateAllCoordinates.m}.
 
 {\begin{tcolorbox}\begin{lstlisting}[style=Matlab-editor]
 % Generalized coordinates in static equilibrium %
@@ -158,7 +158,7 @@ end
 
 \textbf{PHASE 5. Post-process} \\
 
-In lines 84 - 105, the total set of coordinates \texttt{p} at all instants and the axial loads at end $1$ of element $a$ and at end $2$ of element $b$ are computed and plotted. 
+In lines 84 - 105, the total set of coordinates \texttt{p} at all instants and the axial loads at the end $1$ of element $a$ and at end $2$ of element $b$ are computed and plotted. 
 
 {\begin{tcolorbox}\begin{lstlisting}[style=Matlab-editor]
 % Calculation of all coordinates all instants %
@@ -189,9 +189,9 @@ legend('End 1 of element a','End 2 of element b');
 \setlength{\parindent}{0cm}
 \textbf{Function:} \texttt{Calculate-p-from-qind.m} \\
 \textbf{Inputs:} Time instant \texttt{t}. State vector \texttt{y} including independent coordinates \texttt{qind} and velocities \texttt{vind}. Initial guess of dependent coordinates \texttt{qdep0}. Data structure \texttt{reevSys} \\
-\textbf{Outputs:} Total set of coordinates \texttt{p}. Jacobian of nonlinear contraints \texttt{Cp}. Dependent coordinates \texttt{qdep} \\
+\textbf{Outputs:} Total set of coordinates \texttt{p}. Jacobian of nonlinear constraints \texttt{Cp}. Dependent coordinates \texttt{qdep} \\
 
-In lines 107 - 121, the total set of coordinates are re-sampled (to avoid too long animation) and the animation of the motion of the crane is performed.
+In lines 107 - 121, the total set of coordinates is re-sampled (to avoid too long animation) and the animation of the motion of the crane is performed.
 
 {\begin{tcolorbox}\begin{lstlisting}[style=Matlab-editor]
 % Animation of crane motion %
@@ -219,10 +219,10 @@ end
 
 
 \subsection{Installation and running}
- This code does not require any installation. To execute it in a Matlab environment, simply run \textbf{simulateSimpleCrane.m} in \textit{src/simpleCrane/}. By running the code, the system solves the problem for the given parameters, plots simulation results and animates the motion of the crane. 
+ This code does not require any installation. To execute it in a Matlab environment, simply run \texttt{simulateSimpleCrane.m} in \texttt{src/simpleCrane/}. By running the code, the system solves the problem for the given parameters, plots simulation results and animates the motion of the crane. 
 
 \subsection{Conclusions}
-The example and code that can be found at THREAD repository \url{https://github.com/THREAD-2-3/Simulon_ReevingSystem} demonstrate the use of the ALEM method  to analyse the dynamics of reeving systems as described in~\cite{EscalonaOrzechowskiMikkola2018}. In its current form, the code can be used to systematically model and simulate reeving systems including rigid bodies and ropes connected with sheaves and reels. The finite element mesh used to describe the rope dynamics just require one element per rope free span. The rope finite element model can be used to analyse axial and bending deformation, with variable axial force along the rope length, and transverse vibrations. 
+The example and code that can be found at THREAD repository \url{https://github.com/THREAD-2-3/Simulon_ReevingSystem} demonstrate the use of the ALEM method to analyse the dynamics of reeving systems as described in~\cite{EscalonaOrzechowskiMikkola2018}. In its current form, the code can be used to systematically model and simulate reeving systems including rigid bodies and ropes connected with sheaves and reels. The finite element mesh used to describe the rope dynamics just requires one element per rope free span. The rope finite element model can be used to analyse axial and bending deformation, with variable axial force along the rope length, and transverse vibrations. 
 The program is being extended for the simulation of axial-torsion coupled deformation of ropes and the detailed analysis of the rope-sheave contact interaction.
 
 
