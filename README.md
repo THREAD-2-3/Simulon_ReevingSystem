@@ -8,3 +8,4 @@ In the docs folder, the general description of the code and the example of a two
 ![This is an image](https://github.com/THREAD-2-3/.github/blob/main/profile/thread-logo.jpg) 
 
 This project has received funding from the European Union's Horizon 2020 research and innovation programme under the Marie Sklodowska-Curie grant agreement No 860124. 
+ 
